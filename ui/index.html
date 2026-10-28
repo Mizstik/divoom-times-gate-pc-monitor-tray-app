@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MZ TGM 2</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>MZ TGM 2</h1>
+    <p class="sub">Times Gate PC Monitor widget — tray app</p>
+  </header>
+
+  <main>
+    <section class="card cols3">
+      <div class="col">
+        <div class="field">
+          <span>Device IP</span>
+          <div class="ip-row">
+            <input id="ip" type="text" value="192.168.0.100" spellcheck="false" />
+            <button id="scanBtn" type="button">Scan</button>
+          </div>
+        </div>
+
+        <label class="field">
+          <span>Hardware version</span>
+          <select id="hardware">
+            <option value="400">Times Gate (400) — :80/post</option>
+            <option value="402">Times Gate (402) — :9000/divoom_api</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Display to activate</span>
+          <select id="lcdIndex">
+            <option value="0">Display 1 (left)</option>
+            <option value="1">Display 2</option>
+            <option value="2">Display 3</option>
+            <option value="3">Display 4</option>
+            <option value="4">Display 5 (right)</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Update interval (seconds)</span>
+          <input id="intervalSec" type="number" min="1" step="1" value="2" />
+        </label>
+      </div>
+
+      <div class="col">
+        <div class="field">
+          <span>Last widget field (DISK slot)</span>
+          <div class="radios">
+            <label class="radio">
+              <input type="radio" name="lastField" value="vram" checked />
+              <span>VRAM Usage</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="lastField" value="hdd" />
+              <span>HDD Temp</span>
+            </label>
+          </div>
+          <p class="hint">HDD Temp needs admin rights — without elevation it shows N/A.</p>
+        </div>
+
+        <div class="field">
+          <span>Preset ID (0 = auto-detect)</span>
+          <div class="preset-row">
+            <input id="presetId" type="number" min="0" step="1" value="0" />
+            <span id="presetCurrent" class="current-id"></span>
+          </div>
+        </div>
+
+        <p class="hint">To prevent the Times Gate from resetting all other displays when activating the monitoring widget, it needs to know the ID of the preset that's being used. When this is set to 0, the app will query Divoom cloud for the last known preset ID. If you know what this ID is and you never change it, enter it in the box and the app will use it without contacting the cloud API.</p>
+      </div>
+
+      <div class="col">
+        <label class="check">
+          <input id="autoStart" type="checkbox" />
+          <span>Automatically start on Windows start</span>
+        </label>
+        <label class="check">
+          <input id="autoStartMonitor" type="checkbox" />
+          <span>Automatically start monitor on app start</span>
+        </label>
+        <label class="check">
+          <input id="startMinimized" type="checkbox" />
+          <span>Start minimized to system tray</span>
+        </label>
+      </div>
+    </section>
+
+    <section id="scanPanel" class="scan-panel" hidden>
+      <div class="scan-head">
+        <span id="scanStatus">Starting…</span>
+        <button id="scanClose" class="scan-close" title="Close scan panel">✕</button>
+      </div>
+      <div class="scan-list">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Source</th>
+              <th>Name</th>
+              <th>IP</th>
+              <th>HW</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="scanRows"></tbody>
+        </table>
+      </div>
+      <div class="scan-foot">
+        <button id="scanSelect" class="primary" disabled>Select</button>
+      </div>
+    </section>
+
+    <section class="actions">
+      <button id="startStop" class="primary">Start Monitor</button>
+      <button id="exit" class="danger">Exit</button>
+    </section>
+
+    <section class="status">
+      <div class="status-head">
+        <span id="statusDot" class="dot"></span>
+        <span id="statusText">Idle</span>
+        <span class="hint">Closing the window minimizes to the tray. The tray menu has Start / Stop / Exit.</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

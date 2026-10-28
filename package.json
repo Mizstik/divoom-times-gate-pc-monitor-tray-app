@@ -1,0 +1,14 @@
+{
+  "name": "mz-tgm-2",
+  "private": true,
+  "version": "1.0.0",
+  "description": "MZ TGM 2 — Times Gate PC Monitor widget as a Tauri tray app (stats from the Rust backend, no .NET sidecar)",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build": "tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

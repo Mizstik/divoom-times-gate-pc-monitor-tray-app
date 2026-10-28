@@ -1,0 +1,28 @@
+[package]
+name = "mz-tgm-2"
+version = "0.1.0"
+description = "MZ TGM 2 — Times Gate PC Monitor widget tray app"
+authors = ["MZ"]
+edition = "2021"
+
+[lib]
+name = "mz_tgm_2_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon", "image-png"] }
+tauri-plugin-autostart = "2"
+tauri-plugin-single-instance = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sysinfo = "0.33"
+reqwest = { version = "0.12", features = ["json"] }
+tokio = { version = "1", features = ["process", "io-util", "time", "macros", "rt"] }
+
+[profile.release]
+lto = true
+strip = true
+codegen-units = 1
